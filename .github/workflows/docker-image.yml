@@ -36,11 +36,15 @@ jobs:
           echo "New version: $NEW_VERSION!!!!!!!!!!!!"
     
     - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
           docker build -t wilferbru/docker-graphql:$NEW_VERSION .
           docker build -t wilferbru/docker-graphql:latest .
           
     - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
           docker push wilferbru/docker-graphql:$NEW_VERSION
           docker push wilferbru/docker-graphql:latest
